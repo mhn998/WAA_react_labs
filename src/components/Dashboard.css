@@ -1,0 +1,18 @@
+h3 {
+    margin: 10px;
+}
+
+div{ 
+    width: 20rem;
+    height: 10rem;
+}
+
+#container {
+    display: flex;
+
+}
+
+.sub_container {
+    border: 1px black solid;
+    width: 30rem;
+}
