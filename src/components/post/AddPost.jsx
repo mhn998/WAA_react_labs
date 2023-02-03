@@ -1,40 +1,32 @@
 import { addPost } from "../../services/posts.service";
-import { useState } from "react";
+import { useRef } from "react";
 
 const AddPost = ({ handleClose }) => {
-  const [post, setPost] = useState({});
+  const form = useRef();
 
   const handleAdd = (e) => {
     e.preventDefault();
-    addPost(post);
+    const currentForm = form.current;
+    const addesPost = {};
+    Object.keys(currentForm)
+      .filter((field, idx) => idx < 3)
+      .forEach((key) => {
+        addesPost[currentForm[key]["name"]] = currentForm[key]["value"];
+      });
+    addPost(addesPost);
   };
 
   return (
     <div>
-      <form onSubmit={handleAdd}>
+      <form ref={form} onSubmit={handleAdd}>
         <label htmlFor="title">title</label>
-        <input
-          onChange={(e) => setPost({ ...post, title: e.target.value })}
-          type="text"
-          name="title"
-          id="title"
-        />
+        <input value={form.title} type="text" name="title" id="title" />
         <br />
         <label htmlFor="title">author</label>
-        <input
-          onChange={(e) => setPost({ ...post, author: e.target.value })}
-          type="text"
-          name="author"
-          id="author"
-        />
+        <input type="text" name="author" id="author" />
         <br />
         <label htmlFor="title">content</label>
-        <input
-          onChange={(e) => setPost({ ...post, content: e.target.value })}
-          type="text"
-          name="content"
-          id="content"
-        />
+        <input type="text" name="content" id="content" />
         <br />
         <button type="submit">submit</button>
       </form>

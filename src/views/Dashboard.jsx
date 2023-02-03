@@ -9,6 +9,7 @@ import axios from "axios";
 import moment from "moment/moment";
 import jwt from "jsonwebtoken";
 import { refreshTokenApi } from "../services/auth.service";
+import postContext from "../postContext";
 
 const Dashboard = () => {
   // const [title, setTitle] = useState("");
@@ -17,6 +18,7 @@ const Dashboard = () => {
   // const [id, setId] = useState();
   const cookie = useMemo(() => new Cookies(), []);
   const [posts, setPosts] = useState([]);
+  const [shownPost, setShownPost] = useState({});
 
   // const posts = getPosts(titleConfirmed);
 
@@ -77,16 +79,20 @@ const Dashboard = () => {
     window.location.href = "/login";
   };
 
+  const value = {
+    shownPost,
+    setShownPost
+  }
+
   return (
-    <>
+    <postContext.Provider value={value}>
       <button type="submit" onClick={handleLogOut}>
         Log out
       </button>
       {posts.length ? <Posts posts={posts} /> : ""}
       {/* <ChangeNameForm handleTitle={setTitle} handleSubmit={handleSubmit} /> */}
       <br />
-      
-    </>
+    </postContext.Provider>
   );
 };
 
