@@ -31,3 +31,17 @@ export const addPost = async (data) => {
     .post(`http://localhost:8080/api/v1/posts`, data)
     .then((res) => res.data);
 }
+
+
+export const getPost = async id => {
+  return axios
+    .get(`http://localhost:8080/api/v1/posts/${id}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      mode: "no-cors",
+    })
+    .then((res) => res.data);
+}

@@ -1,19 +1,28 @@
 import { addPost } from "../../services/posts.service";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-const AddPost = ({ handleClose }) => {
+const AddPost = ({ handleClose , handleRerenderPosts}) => {
   const form = useRef();
+  const navigate = useNavigate();
 
   const handleAdd = (e) => {
     e.preventDefault();
     const currentForm = form.current;
-    const addesPost = {};
+    const addedPost = {};
     Object.keys(currentForm)
       .filter((field, idx) => idx < 3)
       .forEach((key) => {
-        addesPost[currentForm[key]["name"]] = currentForm[key]["value"];
+        addedPost[currentForm[key]["name"]] = currentForm[key]["value"];
       });
-    addPost(addesPost);
+    try {
+      addPost(addedPost);
+      handleRerenderPosts(addedPost);
+    } catch(e) {
+      console.log("Something went wrong")
+    }
+    navigate("/posts")
+    
   };
 
   return (
